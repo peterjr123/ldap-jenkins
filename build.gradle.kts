@@ -1,9 +1,24 @@
 plugins {
     id("application")
+    id("org.sonarqube") version "6.0.1.5171"
 }
 
 group = "org.example"
 version = "1.0-SNAPSHOT"
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "ldap-project-key")
+        property("sonar.host.url", "http://unboundedID.example.com")
+    }
+}
+
 
 repositories {
     mavenCentral()
@@ -26,3 +41,5 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+project.tasks["sonar"].dependsOn("build")

@@ -17,6 +17,11 @@ pipeline {
                 sh './gradlew build'
             }
         }
+        stage('SonarQube analysis') {
+            withSonarQubeEnv() {
+                sh './gradlew sonar'
+            }
+        }
         stage('Deploy for production') {
             when {
                 branch 'production'
