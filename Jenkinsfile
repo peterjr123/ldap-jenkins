@@ -1,9 +1,14 @@
 pipeline {
     agent any
     stages {
-        stage('Test') {
+        stage('Permission') {
             steps {
                 sh 'chmod +x ./gradlew'
+                sh 'chmod +x ./jenkins/scripts/*.sh'
+            }
+        }
+        stage('Test') {
+            steps {
                 sh './gradlew check'
             }
         }
