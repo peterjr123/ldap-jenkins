@@ -9,7 +9,7 @@ echo 'is followed by another command that retrieves the process ID (PID) value'
 echo 'of the previously run process (i.e. "npm start") and writes this value to'
 echo 'the file ".pidfile".'
 set -x
-npm start &
+nohup ./gradlew run > run.log 2>&1 &
 echo $! > .pidfile
 set +x
 
