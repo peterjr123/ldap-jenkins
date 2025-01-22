@@ -49,7 +49,7 @@ pipeline {
         }
         stage('deploy to container') {
             steps {
-                sh 'docker build -t ldap-sdk-deploy'
+                sh 'docker build -t ldap-sdk-deploy .'
                 sh 'docker compose up -d'
             }
         }
