@@ -54,9 +54,9 @@ pipeline {
                         <p>파이프라인 승인이 필요합니다.</p>
                         <p><a href="${approvalLink}">여기를 클릭하여 승인 또는 거부하세요</a></p>
                         """
-                    mail to: "jsp020206@gmail.com"
-                         subject: "Jenkins 파이프라인 승인 요청: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
-                         body: emailBody
+                    mail to: "jsp020206@gmail.com",
+                         subject: "Jenkins 파이프라인 승인 요청: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                         body: emailBody,
                          mimeType: "text/html"
                 }
                 input message: 'Approve? (Click "Proceed" to approve)'
