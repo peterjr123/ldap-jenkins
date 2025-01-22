@@ -11,6 +11,11 @@ pipeline {
             steps {
                 sh './gradlew check'
             }
+            post {
+                success {
+                    junit 'build/test-results/**/*.xml'
+                }
+            }
         }
         stage('build') {
             steps {
@@ -31,14 +36,31 @@ pipeline {
                     waitForQualityGate abortPipeline: true
                 }
             }
+            post {
+                success {
+                    mail to: 'jsp020206@gmail.com',
+                         subject: "sonarqube quality gate passed",
+                         body: "sonarqube project URL: http://localhost:9000/dashboard?id=ldap-project-key"
+                }
+            }
         }
         stage('Acceptance Test') {
-            when {
-                branch 'production'
-            }
             steps {
                 sh './jenkins/scripts/deploy-for-acceptance-test.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+
+                script {
+                    def approvalLink = "${env.BUILD_URL}input"
+                    def emailBody = """
+                        <p>파이프라인 승인이 필요합니다.</p>
+                        <p><a href="${approvalLink}">여기를 클릭하여 승인 또는 거부하세요</a></p>
+                        """
+                    mail to: "jsp020206@gmail.com"
+                         subject: "Jenkins 파이프라인 승인 요청: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+                         body: emailBody
+                         mimeType: "text/html"
+                }
+                input message: 'Approve? (Click "Proceed" to approve)'
+
                 sh './jenkins/scripts/kill.sh'
             }
         }
@@ -55,16 +77,12 @@ pipeline {
         }
     }
     post {
-        always {
-            echo 'This will always run'
-        }
         success {
             echo 'This will run only if successful'
-            junit 'build/test-results/**/*.xml'
 
             mail to: 'jsp020206@gmail.com',
-                subject: 'pipeline success ${currentBuild.fullDisplayName}',
-                body: 'build url: ${env.BUILD_URL}'
+                subject: "pipeline success ${currentBuild.fullDisplayName}",
+                body: "build url: ${env.BUILD_URL}"
         }
         failure {
             echo 'This will run only if failed'
