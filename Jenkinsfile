@@ -9,7 +9,6 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh './gradlew clean'
                 sh './gradlew check'
             }
         }
@@ -21,7 +20,7 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv(installationName: 'sonarqube_server') {
-                    sh './gradlew sonar'
+                    sh './gradlew sonar --debug'
                 }
             }
 
