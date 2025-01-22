@@ -25,6 +25,13 @@ pipeline {
             }
 
         }
+        stage('SonarQube Quality Gate') {
+            steps {
+                timeout(time: 30, unit: 'SECONDS') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
         stage('Deploy for production') {
             when {
                 branch 'production'
