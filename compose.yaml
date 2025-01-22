@@ -2,8 +2,4 @@ services:
   app:
     image: ldap-sdk-deploy
     ports:
-      - 8080:8080
-    volumes:
-      - type: bind
-        source: ./cert
-        target: /opt/app/cert
+      - 3001:3001

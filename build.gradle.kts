@@ -16,7 +16,7 @@ sonar {
     properties {
         property("sonar.projectKey", "ldap-project-key")
         property("sonar.host.url", "myHostUrl")
-        property("sonar.token", "sqa_2a7be354c976023a25ef971b283d210b75e90c30")
+        property("sonar.token", "sqa_8fffdb9a4c5fc21dfd1f44d67d3a3906dad3d6de")
     }
 }
 
