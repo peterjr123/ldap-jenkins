@@ -1,4 +1,4 @@
-FROM openjdk:23
+FROM openjdk:17
 WORKDIR /opt/app
 COPY . .
 RUN ./gradlew build

@@ -32,14 +32,25 @@ pipeline {
                 }
             }
         }
-        stage('Deploy for production') {
+        stage('Acceptance Test') {
             when {
                 branch 'production'
             }
             steps {
-                sh './jenkins/scripts/deploy-for-production.sh'
+                sh './jenkins/scripts/deploy-for-acceptance-test.sh'
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
                 sh './jenkins/scripts/kill.sh'
+            }
+        }
+        stage('remove previous container') {
+            steps {
+                sh 'docker compose down'
+            }
+        }
+        stage('deploy to container') {
+            steps {
+                sh 'docker build -t ldap-sdk-deploy'
+                sh 'docker compose up -d'
             }
         }
     }

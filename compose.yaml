@@ -1,6 +1,6 @@
 services:
   app:
-    image: ldap
+    image: ldap-sdk-deploy
     ports:
       - 8080:8080
     volumes:
