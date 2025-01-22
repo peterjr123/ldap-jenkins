@@ -15,7 +15,8 @@ java {
 sonar {
     properties {
         property("sonar.projectKey", "ldap-project-key")
-        property("sonar.host.url", "http://unboundedID.example.com")
+        property("sonar.host.url", "myHostUrl")
+        property("sonar.token", "sqa_62c42906ff19b35da598e7535323248ad0cfd9ac")
     }
 }
 
@@ -41,5 +42,6 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
 
 project.tasks["sonar"].dependsOn("build")
