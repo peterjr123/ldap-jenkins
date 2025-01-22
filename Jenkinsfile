@@ -18,12 +18,9 @@ pipeline {
             }
         }
         stage('SonarQube analysis') {
-            tools {
-                jdk "jdk17"
-            }
             steps {
                 withSonarQubeEnv(installationName: 'sonarqube_server') {
-                    sh './gradlew sonar'
+                    sh './gradlew sonar --info'
                 }
             }
 
